@@ -8,7 +8,6 @@ namespace aspnetCorePractice.Models
 {
     public class TodoItem
     {
-        [Required]
         public string Id { get; set; }
 
         [Required]

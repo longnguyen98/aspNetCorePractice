@@ -26,7 +26,7 @@ namespace aspnetCorePractice.Controllers
         {
             return Ok(_todoRepository.All);
         }
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public IActionResult FindById(string id)
         {
             Console.WriteLine("Finding entity with id:" + id);
@@ -50,11 +50,7 @@ namespace aspnetCorePractice.Controllers
                 {
                     return BadRequest(ErrorCode.TodoItemNameAndNotesRequired.ToString());
                 }
-                bool itemExists = _todoRepository.DoesItemExist(item.Id);
-                if (itemExists)
-                {
-                    return StatusCode(StatusCodes.Status409Conflict, ErrorCode.TodoItemIDInUse.ToString());
-                }
+                item.Id = Guid.NewGuid().ToString();
                 _todoRepository.Insert(item);
             }
             catch (Exception)
@@ -63,16 +59,16 @@ namespace aspnetCorePractice.Controllers
             }
             return Ok(item);
         }
-        [HttpPut("{id}")]
-        public IActionResult Edit([FromBody] TodoItem item, string id)
-        {
+        [HttpPut]
+        public IActionResult Edit([FromBody] TodoItem item)
+        {            
             try
             {
                 if (item == null || !ModelState.IsValid)
                 {
                     return BadRequest(ErrorCode.TodoItemNameAndNotesRequired.ToString());
                 }
-                var existingItem = _todoRepository.Find(id);
+                var existingItem = _todoRepository.Find(item.Id);
                 if (existingItem == null)
                 {
                     return NotFound(ErrorCode.RecordNotFound.ToString());
@@ -101,7 +97,7 @@ namespace aspnetCorePractice.Controllers
             {
                 return BadRequest(ErrorCode.CouldNotDeleteItem.ToString());
             }
-            return Ok(_todoRepository.All);
+            return NoContent();
         }
 
     }
