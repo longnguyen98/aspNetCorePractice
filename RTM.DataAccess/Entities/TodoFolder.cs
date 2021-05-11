@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace aspnetCorePractice.Entities
+namespace RTM.DataAccess.Entities
 {
     public partial class TodoFolder
     {

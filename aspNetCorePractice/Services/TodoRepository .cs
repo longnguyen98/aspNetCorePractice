@@ -1,4 +1,4 @@
-﻿using aspnetCorePractice.Entities;
+﻿
 using aspnetCorePractice.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -9,7 +9,7 @@ namespace aspnetCorePractice.Services
 {
     class TodoRepository : ITodoRepository
     {
-        private List<TodoItem> _todoList;
+        //private List<TodoItem> _todoList;
 
         public TodoRepository()
         {

@@ -1,10 +1,10 @@
 ﻿
-using aspnetCorePractice.Entities;
 using aspnetCorePractice.Enums;
 using aspnetCorePractice.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RTM.DataAccess.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
