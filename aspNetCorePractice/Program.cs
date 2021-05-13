@@ -21,6 +21,11 @@ namespace aspnetCorePractice
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+                .ConfigureLogging(logging => 
+                { 
+                    logging.SetMinimumLevel(LogLevel.Trace); 
+                })
+            ;
     }
 }

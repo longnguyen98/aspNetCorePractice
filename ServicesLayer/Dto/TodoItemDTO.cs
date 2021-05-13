@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-#nullable disable
-
-namespace RTM.DataAccess.Entities
+namespace ServicesLayer.Dto
 {
-    public partial class TodoItem
+   public class TodoItemDTO
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Note { get; set; }
         public int? Status { get; set; }
-        public Guid? TodoFolderId { get; set; }
-
-        public virtual TodoFolder TodoFolder { get; set; }
     }
 }

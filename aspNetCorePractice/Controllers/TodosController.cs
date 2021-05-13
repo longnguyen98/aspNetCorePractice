@@ -1,10 +1,11 @@
 ﻿
 using aspnetCorePractice.Enums;
-using aspnetCorePractice.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using RTM.DataAccess.Entities;
+using ServicesLayer;
+using ServicesLayer.Dto;
+using ServicesLayer.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,25 +17,24 @@ namespace aspnetCorePractice.Controllers
     [Route("api/[controller]")]
     public class TodosController : ControllerBase
     {
-        private readonly ITodoRepository _todoRepository;
-        private readonly todosContext _todosContext;
+        private readonly ITodosService todosService;
 
-        public TodosController(ITodoRepository todoRepository, todosContext dbContext)
+        public TodosController(ITodosService service)
         {
-            _todoRepository = todoRepository;
-            _todosContext = dbContext;
+            todosService = service;
         }
 
-        [HttpGet("items")]
-        public async Task<IActionResult> List()
-        {
-            return Ok(await _todosContext.TodoItems.ToListAsync());
-        }
+        //[HttpGet("items")]
+        //public async Task<IActionResult> List()
+        //{
+        //    return Ok(await _todosContext.TodoItems.ToListAsync());
+        //}
         [HttpGet("folders")]
-        public async Task<IActionResult> Folders()
+        public IActionResult Folders()
         {
-            var list = _todosContext.TodoFolders.Find(Guid.Parse("7418634e-37e4-46c2-87f0-e03d6b116306")).TodoItems;
-            return Ok(await _todosContext.TodoFolders.ToListAsync());
+            List<TodoFolderDTO> _folders = todosService.GetTodoFolders();
+
+            return Ok(_folders);
         }
         //[HttpGet("{id}")]
         //public IActionResult FindById(string id)

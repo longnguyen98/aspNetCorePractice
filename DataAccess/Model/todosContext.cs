@@ -4,15 +4,15 @@ using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
-namespace RTM.DataAccess.Entities
+namespace DataAccess.Model
 {
-    public partial class todosContext : DbContext
+    public partial class TodosContext : DbContext
     {
-        public todosContext()
+        public TodosContext()
         {
         }
 
-        public todosContext(DbContextOptions<todosContext> options)
+        public TodosContext(DbContextOptions<TodosContext> options)
             : base(options)
         {
         }
@@ -24,10 +24,11 @@ namespace RTM.DataAccess.Entities
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Server=PC-078\\SQLEXPRESS;Database=todos;Trusted_Connection=True;");
+                optionsBuilder.EnableSensitiveDataLogging();
             }
-        }
+        }   
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -72,7 +73,8 @@ namespace RTM.DataAccess.Entities
                 entity.HasOne(d => d.TodoFolder)
                     .WithMany(p => p.TodoItems)
                     .HasForeignKey(d => d.TodoFolderId)
-                    .HasConstraintName("todo_item_FK");
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("TodoItem_FK");
             });
 
             OnModelCreatingPartial(modelBuilder);
